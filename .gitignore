@@ -1,0 +1,15 @@
+# Virtual environment
+venv/
+__pycache__/
+
+# VS Code settings
+.vscode/
+
+# Instance / DB files
+instance/
+
+# Python cache
+*.pyc
+
+# OS files
+.DS_Store
