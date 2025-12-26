@@ -3,17 +3,21 @@ from flask import Flask, render_template, request, redirect, url_for
 from extensions import db
 import pandas as pd
 
-BASE_DIR = "/home"   # Azure writable path
+BASE_DIR = "/home"
 DB_PATH = os.path.join(BASE_DIR, "database.db")
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{DB_PATH}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+db.init_app(app)
 
-db.init_app(app)                   # ✅ db is now defined
+from models import Student, Subject, Marks
 
-from models import Student, Subject, Marks   # ✅ safe import
+# 🔴 THIS WAS MISSING
+with app.app_context():
+    db.create_all()
+
 
 
 @app.route('/')
