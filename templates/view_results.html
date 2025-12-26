@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Results</h2>
+
+<table border="1" cellpadding="10">
+<tr>
+    <th>Roll No</th>
+    <th>Name</th>
+    <th>Class</th>
+    <th>GPA</th>
+</tr>
+
+{% for r in results %}
+<tr>
+    <td>{{ r.roll_no }}</td>
+    <td>{{ r.name }}</td>
+    <td>{{ r.class }}</td>
+    <td>{{ r.gpa }}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
