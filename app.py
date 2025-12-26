@@ -1,10 +1,15 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for
-from extensions import db          # ✅ FIX
+from extensions import db
 import pandas as pd
 
+BASE_DIR = "/home"   # Azure writable path
+DB_PATH = os.path.join(BASE_DIR, "database.db")
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{DB_PATH}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 db.init_app(app)                   # ✅ db is now defined
 
@@ -132,9 +137,12 @@ def export_results():
         })
 
     df = pd.DataFrame(data)
-    df.to_csv('results.csv', index=False)
-    return "Results exported to results.csv"
+
+    csv_path = os.path.join("/home", "results.csv")
+    df.to_csv(csv_path, index=False)
+
+    return "Results exported successfully"
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    app.run()
